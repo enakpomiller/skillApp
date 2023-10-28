@@ -6,7 +6,7 @@
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title" ">
-             <a href="<?=base_url('')?>" class="text-dark">  Create Request  </a>
+             <a href="<?=base_url('')?>" class="text-dark">  Take skill tutorials  </a>
             </h3>
           </div>
 
@@ -18,42 +18,21 @@
            
                   <div class="table-responsive">
                  
-           <div class="col-md-6 grid-margin stretch-card" style="margin:auto;">
-           
-              <div class="card">
-                <div class="card-body">
-               <?php if($this->session->flashdata('msg_create')){ ?>
-                <div class="alert alert-success text-center"> <?=$this->session->flashdata('msg_create')?> </div>
-               <?php }else{?>
-                <div class="text-danger"> <?=$this->session->flashdata('msg_error')?> </div>
-                <?php } ?>
-                  <h4 class="card-title"> Request  form</h4>
-                  
-                <form action="<?=base_url('home/create_request')?>" method="POST" class="forms-sample">
-                <div class="form-group">
-                      <p for="exampleInputPassword1"> Title </p>
-                       <input type="text" name="title">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1"> State Your Request </label>
-                      <textarea cols="55" rows="10" name="requesttitle"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputConfirmPassword1"> State Your Reasons</label>
-                      <textarea cols="55" rows="5" name="reasons"></textarea>
-                    </div>
+                      <div class="container-fluid">
+                            <?php foreach($videos as $watch){?>
+                             
+                              <video width="50%" height="240" class="pt-4 pb-4" controls>
+                                  <source src="<?='http://localhost/skillapp/assets/uploads/'.$watch->userfile ?>" type="video/mp4">
+                                   Your browser does not support the video tag.
+                              </video>
+                              <h5> <?=$watch->title?>   </h5>
+                              <p> Date : <?=$watch->date?>   </p>
+                          
+                              <?php }?>
 
-                    <div class="form-group">
-                      <label for="exampleInputEmail1"> Choose date  </label>
-                      <input type="date" name="date" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                    </div>
-       
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
-                </form>
-                </div>
-              </div>
-            </div>
+                         
+
+                        </div>
 
                   </div>
                 </div>

@@ -7,33 +7,38 @@
           <div class="page-header">
             <h3 class="page-title" ">
              <a href="<?=base_url('')?>" class="text-dark">  <?=$title?> </a>
+        
             </h3>
           </div>
 
-
+            <?php if($this->session->flashdata('msg_create')){ ?>
+                <center>  <?=$this->session->flashdata('msg_create')?> </center>
+                 <?=$this->session->unset_userdata('msg_create')?>
+             <?php } ?> 
         <div class="row">
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                
-           
+
          <div class="table-responsive">
+     
              <div class="row">
-       
                   <div class="col-md-6" style="margin:auto;margin-top:50px;margin-bottom:50px;">
-                     <form action="<?php echo base_url('home/post_videos'); ?>" method="post" enctype="multipart/form-data">
-                        <div class="mb-3">
-                                <label for="" class="form-label"> Brows Video</label>
-                                <input type="file" name="media_file" required  class="form-control">
-                            </div>
-                              <div class="mb-3">
-                                  <label for="" class="form-label"> Title </label>
-                                  <input type="text" name="title" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="" class="form-label"> Date </label>
-                                  <input type="date" name="date" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                              </div>
+       
+                  <?php echo form_open_multipart('home/post_videos'); ?>
+                     <!-- <form action="<?php// echo base_url('home/post_videos'); ?>" method="post" enctype="multipart/form-data"> -->
+                                <div class="mb-3">
+                                    <label for="" class="form-label"> Title </label>
+                                    <input type="text" name="title" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label"> Brows Video</label>
+                                    <input type="file" name="userfile" required  class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label"> Date </label>
+                                    <input type="date" name="date" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                </div>
                   
                           <button type="submit" class="btn btn-info w-100"> Post </button>
                       </form>

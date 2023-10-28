@@ -30,23 +30,9 @@ class Home extends CI_Controller{
     public function create_request(){
    
         if($_POST){
-                $data =[
-                    'user_id'=>$this->session->id,
-                    'title'=>$this->input->post('title'),
-                    'requesttitle'=>$this->input->post('requesttitle'),
-                    'reasons'=>$this->input->post('reasons'),
-                    'date'=>$this->input->post('date'),
-                    'timer'=>date('i:sa')
-                ];
-            $insert = $this->db->insert('tbl_request',$data);
-            if($insert){
-               $this->session->set_flashdata('msg_create',' Your Request Has Been Sent ');
-               return redirect(base_url('home/create_request'));
-            }else{
-                $this->session->set_flashdata('msg_error',' Sorry Request Cannot be sent ');
-                return redirect(base_url('home/create_request'));
-            }
+           
         }else{
+            $this->data['videos'] = $this->db->get('tbl_post_videos')->result();
             $this->data['title'] = " Create Request";
             $this->data['page_name'] = "create_request";
             $this->load->view('layout/index',$this->data);
@@ -76,57 +62,35 @@ class Home extends CI_Controller{
      }
   
     public function post_videos(){
+     
         if($_POST){   
-           
-            // $names = $this->input->post('names');
-            // $date = $this->input->post('date');
-        //image upload------------------------------------
-                    // $config['upload_path'] = './assets/uploads/';
-                    // $config['allowed_types'] = 'gif|jpg|jpeg|png|mp3|mp4|avi|flv';
-                    // $config['max_size'] ='3048';
-                    // $config['max_width'] = '80000';
-                    // $config['max_height'] ='60000';
-                    // $this->load->library('upload',$config);
-                    // if(!$this->upload->do_upload()){
-                    //     $errors = array('error'=>$this->upload->display_errors());
-                    //     $userfile = 'noimage.jpg';
-                    // }else{
-                    //     $data = array('upload_data'=>$this->upload->data());
-                    //     $userfile =  $_FILES['userfile']['name'];
+                $title = $this->input->post('title');
+            //image upload------------------------------------
+                if ($_FILES['userfile']['name']) {
+                    $config['upload_path'] = './assets/uploads/';
+                    $config['allowed_types'] = 'gif|jpg|jpeg|png|mp3|mp4|avi|flv|mp4';
+                        // $config['max_size'] ='3048';
+                    $config['max_size'] ='1000000000000000';
+                    $config['max_width'] = '80000';
+                    $config['max_height'] ='60000';
+                    $this->load->library('upload',$config);
+                    if(!$this->upload->do_upload()){
+                        $errors = array('error'=>$this->upload->display_errors());
+                        $userfile = 'noimage.jpg';
+                    }else{
+                        //echo "<pre>"; print_r(" uploaded");die;
+                        $data = array('upload_data'=>$this->upload->data());
+                        $userfile =  $_FILES['userfile']['name'];
 
-                    // }
-                
-                // Check if the form was submitted
-                    if ($_FILES['media_file']['name']) {
-                        echo "<pre>"; print_r($_FILES);die;
-                        // File was uploaded, process it
-                        $config['upload_path'] = './uploads/media/';
-                        $config['allowed_types'] = 'gif|jpg|jpeg|png|mp3|mp4|avi|flv';
-                        $config['max_size'] = 100240;
-                        $config['encrypt_name'] = TRUE;
-
-                        $this->load->library('upload', $config);
-
-                        if ($this->upload->do_upload('media_file')) {
-                            // File upload successful. Process the uploaded file.
-                            $upload_data = $this->upload->data();
-                            // You can do further processing here, e.g., save file details to a database.
-                            // Redirect or display a success message.
-                            echo 'File uploaded successfully!';
-                        } else {
-                            // File upload failed. Handle the error.
-                            $error = $this->upload->display_errors();
-                            echo $error;
-                        }
                     }
-                    
-
-
-
-         // close image upload ---------------------------
-            $create = $this->home_m->createvideos($title,$date,$userfile);
-            $this->session->set_flashdata('msg_create','<div class="alert alert-success text-center"> Video Uploaded Successfully</div> ');
-            return redirect(base_url('home'));
+                }else{
+                  echo " An error occured ";
+                }
+            // close image upload ---------------------------
+            $date = $this->input->post('date');
+                $create = $this->home_m->createvideos($title,$userfile,$date);
+                $this->session->set_flashdata('msg_create','<div class="alert alert-success w-50 text-center"> Video Uploaded Successfully</div> ');
+                return redirect(base_url('home/post_videos'));
         }else{
             $this->data['title'] = " Post Videos ";
             $this->data['page_name'] = "post_videos";
@@ -134,6 +98,10 @@ class Home extends CI_Controller{
         }
   
     }
+
+    public function viewusers(){
+         echo " view users ";
+      }
      public function getreply($id){
         $user_id = $this->session->userdata('id'); 
         if($_POST){

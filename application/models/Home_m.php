@@ -8,13 +8,12 @@ class Home_m extends CI_model{
 
 
 
-  public function createvideos($title,$date,$userfile){
+  public function createvideos($title,$userfile,$date){
         $data_arr =[
             'title'=>$title,
-            'date'=>$date,
-            'userfile'=>$userfile
+            'userfile'=>$userfile,
+            'date'=>$date
         ];
-        var_dump($data_arr);die;
          $this->db->insert('tbl_post_videos',$data_arr);
    }
 
