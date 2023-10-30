@@ -58,14 +58,12 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Country</label>
-                  <select required name="country" class="form-control form-control-lg" id="exampleFormControlSelect2">
-                    <option>Country</option>
-                    <option>United States of America</option>
-                    <option>United Kingdom</option>
-                    <option>India</option>
-                    <option>Germany</option>
-                    <option>Argentina</option>
+                  <label> Select Skill</label>
+                  <select required name="category_id" class="form-control form-control-lg" id="exampleFormControlSelect2">
+                    <option disabled> Select Skill</option>
+                     <?php foreach($category as $cat){  ?>
+                      <option value="<?=$cat->id?>"> <?=$cat->category?>    </option>
+                     <?php }?>
                   </select>
                 </div>
                 <div class="form-group">

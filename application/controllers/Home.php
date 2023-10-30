@@ -28,15 +28,13 @@ class Home extends CI_Controller{
     }
   
     public function create_request(){
-   
-        if($_POST){
-           
-        }else{
-            $this->data['videos'] = $this->db->get('tbl_post_videos')->result();
+            $category_id = $this->session->category_id;
+              //$this->data['videos'] = $this->db->get('tbl_post_videos')->result();
+            $this->data['videos'] = $this->db->get_where('tbl_post_videos',array('category_id'=>$category_id))->result();
+              //echo "<pre>"; print_r($this->data['videos']);die;
             $this->data['title'] = " Create Request";
             $this->data['page_name'] = "create_request";
-            $this->load->view('layout/index',$this->data);
-        }
+            $this->load->view('layout/index',$this->data); 
        
      }
 
@@ -51,7 +49,7 @@ class Home extends CI_Controller{
 
      public function downloadfile(){
         $this->data['page_name'] = "viewreq";
-    }
+     }
   
      public function admin_viewreq(){
         $this->data['title'] = " View Request  ";
@@ -87,11 +85,14 @@ class Home extends CI_Controller{
                   echo " An error occured ";
                 }
             // close image upload ---------------------------
-            $date = $this->input->post('date');
-                $create = $this->home_m->createvideos($title,$userfile,$date);
+                $cat = $this->input->post('category_id');
+                $date = $this->input->post('date');
+         
+                $create = $this->home_m->createvideos($title,$userfile,$cat,$date);
                 $this->session->set_flashdata('msg_create','<div class="alert alert-success w-50 text-center"> Video Uploaded Successfully</div> ');
                 return redirect(base_url('home/post_videos'));
         }else{
+            $this->data['category'] = $this->db->get('tbl_category')->result();
             $this->data['title'] = " Post Videos ";
             $this->data['page_name'] = "post_videos";
             $this->load->view('layout/index',$this->data);
@@ -100,8 +101,47 @@ class Home extends CI_Controller{
     }
 
     public function viewusers(){
-         echo " view users ";
+        $this->data['title'] = " Manage Users ";
+        $this->data['page_name'] = "users_page";
+        $this->data['category'] = $this->db->get('tbl_category')->result();
+        $this->data['allusers'] = $this->db->get('tbl_users')->result();
+        $this->load->view('layout/index',$this->data);
       }
+      
+    public function updateuser(){
+         $data_update = [
+            'id'=>$this->input->post('id'),
+            'names'=>$this->input->post('names'),
+            'email'=>$this->input->post('email'),
+            'category_id'=>$this->input->post('category_id')
+         ];
+        $this->db->where('id',$data_update['id']);
+        $this->db->update('tbl_users',$data_update);
+        $this->session->set_flashdata('msg_update','<div class="alert alert-success w-50 text-center"> Video Updated Successfully</div> ');
+        return redirect(base_url('home/viewusers'));
+
+     }
+   
+     public function manage_videos(){
+        $this->data['title'] = "Manage Videos";
+        $this->data['allvideos'] = $this->db->get('tbl_post_videos')->result();
+        $this->data['page_name'] = "manage_videos";
+        $this->load->view('layout/index',$this->data);
+     
+      }
+
+    public function deletevideos($id){
+        $this->db->where('vid_id',$id);
+        $del_vid = $this->db->delete('tbl_post_videos');
+        if($del_vid){
+            $this->session->set_flashdata('del_videos','<div class="alert alert-success w-50 text-center"> Video deleted Successfully</div> ');
+            return redirect(base_url('home/manage_videos'));
+         }else{
+            echo " cannot delete ";
+         } 
+      
+
+     }
      public function getreply($id){
         $user_id = $this->session->userdata('id'); 
         if($_POST){
@@ -144,22 +184,15 @@ class Home extends CI_Controller{
      
      }
     
-     public function deletereq($id){
-        $timer = $this->db->get_where('tbl_request',array('user_id'=>$id))->row()->timer;
-          $this->db->where('id',$id);
+     public function deleteuser($id){
+         $this->db->where('id',$id);
          $del = $this->db->delete('tbl_users');
          if($del){
-            $this->db->where('timer',$timer);
-            $this->db->delete('tbl_request');
-
-            $this->db->where('timer',$timer);
-            $this->db->delete('tbl_replyreq');
-
-            $this->session->set_flashdata('msg_del',' Delete action was successful');
-            return redirect(base_url('home/admin_viewreq'));
+            $this->session->set_flashdata('msg_del','<div class="text-success"> User Deleted Successfully </div>');
+            return redirect(base_url('home/viewusers'));
         }else{
             $this->session->set_flashdata('msg_error','<div class="text-danger"> Error! Unable to delete </div>');
-            return redirect(base_url('home/admin_viewreq'));
+            return redirect(base_url('home/viewusers'));
         }
         
 

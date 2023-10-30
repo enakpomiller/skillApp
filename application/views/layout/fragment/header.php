@@ -5,6 +5,9 @@
 
 
 <head>
+  <!-- toaster cdn --> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <!-- end toaster --> 
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,7 +33,7 @@
           <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
             <a class="navbar-brand brand-logo" href="index-2.html">
                 <!-- <img src="<?=base_url()?>assets/images/logo.svg" alt="logo"/></a> -->
-                <?php if($this->session->category=='student'){ ?>
+                <?php if($this->session->usertype=='student'){ ?>
 
                 <h5 style="color:#000000;">  User  Board</h5> 
                 <?php }else{?>
@@ -120,7 +123,7 @@
                 <i class="fas fa-cog text-primary"></i>
                 Settings
               </a>
-              <?php if($this->session->category=='student') {?>
+              <?php if($this->session->usertype=='student') {?>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="<?=base_url('login/logout')?>">
                     <i class="fas fa-power-off text-primary"></i>

@@ -3,7 +3,7 @@
         <ul class="nav">
           <li class="nav-item nav-profile">
             <div class="nav-link">
-            <?php if($this->session->category=='student') {?>
+            <?php if($this->session->usertype=='student') {?>
             <?php if ($this->session->userdata('logged_in')): ?>
        
                 <div class="profile-image">
@@ -36,12 +36,7 @@
               <span class="menu-title"> View Tutorials   </span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?=base_url('home/requestfeed')?>">
-              <i class="fa fa-puzzle-piece menu-icon"></i>
-              <span class="menu-title"> View Videos  </span>
-            </a>
-          </li>
+
           <?php }else{ ?>
 
             <li class="nav-item">
@@ -60,9 +55,9 @@
             <div class="collapse" id="page-layouts">
               <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="<?=base_url('home/post_videos')?>"> Upload Videos</a></li>
-                <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?=base_url('home/viewusers')?>"> View Users   </a></li>
+                <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?=base_url('home/viewusers')?>"> Manage Users   </a></li>
 
-                <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="pages/layout/horizontal-menu.html">Horizontal Menu</a></li>
+                <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?=base_url('home/manage_videos')?>"> Manage Videos </a></li>
               </ul>
             </div>
           </li>

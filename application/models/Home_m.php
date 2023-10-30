@@ -7,15 +7,31 @@ class Home_m extends CI_model{
   //private $tbl_adminlogin = 'tbl_admin';
 
 
-
-  public function createvideos($title,$userfile,$date){
+  public function createvideos($title,$userfile,$cat,$date){
         $data_arr =[
             'title'=>$title,
             'userfile'=>$userfile,
+            'category_id'=>$cat,
             'date'=>$date
+            
         ];
+
          $this->db->insert('tbl_post_videos',$data_arr);
    }
+
+
+  public function createuser($names,$email,$userfile,$cat,$password){
+    $data_arr =[
+        'names'=>$names,
+        'email'=>$email,
+        'userfile'=>$userfile,
+        'category_id'=>$cat,
+        'password'=>$password
+        
+    ];
+
+     $this->db->insert('tbl_users',$data_arr);
+}
 
    public function CheckUser($email,$password){
       $query = $this->db->get_where('tbl_users',array('email'=>$email,'password'=>$password));

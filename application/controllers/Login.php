@@ -25,7 +25,8 @@ class Login extends CI_Controller{
                 'names'=>$UserExist->names,
                 'email'=>$UserExist->email,
                 'userfile'=>$UserExist->userfile,
-                'category'=>'student',
+                'usertype'=>'student',
+                'category_id'=>$UserExist->category_id,
                 'logged_in'=>TRUE
                 );
                 //echo "<pre>"; print_r($data);die;

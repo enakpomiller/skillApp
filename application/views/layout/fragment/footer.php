@@ -2,8 +2,12 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
 
+  <!-- toaster cdn --> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <!-- end toaster --> 
+  
+  <!-- container-scroller -->
   <!-- plugins:js -->
   <script src="<?=base_url()?>assets/vendors/js/vendor.bundle.base.js"></script>
   <script src="<?=base_url()?>assets/vendors/js/vendor.bundle.addons.js"></script>

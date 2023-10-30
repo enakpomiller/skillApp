@@ -16,6 +16,7 @@ class Register extends CI_Controller{
 
     public function index (){
         $this->data['title'] = " Signup";
+        $this->data['category'] = $this->db->get('tbl_category')->result();
         $this->data['page_name'] = "register";
         $this->load->view('layout/index2',$this->data);
      
@@ -47,9 +48,9 @@ class Register extends CI_Controller{
 
             }
         // close image upload ---------------------------
-        $country = $this->input->post('country');
+        $cat = $this->input->post('category_id');
         $password = $this->input->post('password');
-        $create = $this->home_m->createuser($names,$email,$userfile,$country,$password);
+        $create = $this->home_m->createuser($names,$email,$userfile,$cat,$password);
         $this->session->set_flashdata('msg_create','<div class="alert alert-success text-center"> Account Created Successfully, please login </div> ');
         return redirect(base_url('login'));
         

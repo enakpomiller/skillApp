@@ -1,5 +1,8 @@
 
-
+<script>
+    // Trigger a success toast notification
+    showToast("Success! The operation was completed.", "success");
+</script>
 
       <!-- partial -->
       <div class="main-panel">
@@ -34,6 +37,17 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label"> Brows Video</label>
                                     <input type="file" name="userfile" required  class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label"> Type of skill</label>
+                                    
+                                      <select name="category_id" class="form-control">
+                                      <option disabled> Select  </option>
+                                          <?php foreach($category as $cat){  ?>
+                                              <option value="<?=$cat->id?>">  <?=$cat->category?>    </option>
+                                          <?php }?>
+                                      </select>
+                                     
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label"> Date </label>
@@ -111,3 +125,15 @@
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
+
+
+  <script>
+    function showToast(message, type) {
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+        };
+        toastr[type](message);
+    }
+</script>

@@ -6,7 +6,7 @@
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title" ">
-             <a href="<?=base_url('')?>" class="text-dark">  Take skill tutorials  </a>
+             <a href="<?=base_url('')?>" class="text-dark">  Take skill tutorials on <?php echo  ucfirst($this->db->get_where('tbl_category',array('id'=>$this->session->category_id))->row()->category )?> </a>
             </h3>
           </div>
 
@@ -15,25 +15,22 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-           
                   <div class="table-responsive">
-                 
                       <div class="container-fluid">
-                            <?php foreach($videos as $watch){?>
-                             
-                              <video width="50%" height="240" class="pt-4 pb-4" controls>
-                                  <source src="<?='http://localhost/skillapp/assets/uploads/'.$watch->userfile ?>" type="video/mp4">
+                        <?php if($videos){ ?>
+                            <?php foreach($videos as $video) {?>
+                              <video width="50%" height="240" class="pt-4 pb-4 bg-dark" controls>
+                                  <source src="<?='http://localhost/skillapp/assets/uploads/'.$video->userfile ?>" type="video/mp4">
                                    Your browser does not support the video tag.
                               </video>
-                              <h5> <?=$watch->title?>   </h5>
-                              <p> Date : <?=$watch->date?>   </p>
-                          
-                              <?php }?>
-
-                         
-
+                              <h5>Title: <?=ucfirst($video->title)?>   </h5>
+                              <h5> Skill Type:<?php echo ucfirst($this->db->get_where('tbl_category',array('id'=>$this->session->category_id ))->row()->category) ?> </h5>
+                              <p> Date : <?=$video->date?>   </p>
+                               <?php }?>
+                            <?php }else{?>
+                              <p> No Skill Tutorials yet </p>
+                              <?php } ?>
                         </div>
-
                   </div>
                 </div>
               </div>
