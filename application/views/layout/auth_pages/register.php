@@ -47,14 +47,18 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label> Upload Passport</label>
+ 
                   <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      <span class="input-group-text bg-transparent border-right-0">
-                        <i class="far fa-file text-primary"></i>
-                      </span>
-                    </div>
-                    <input type="file" required name="userfile" class="form-control form-control-lg border-left-0" placeholder="Email">
+      
+                    <!-- image frame --> 
+                    <div id="image-holder" class="image-responsive" style="height: 200px; width: 170px; border: 2px solid grey; border-radius:8px;  padding:2px;margin:auto;">
+                        <img id="imagePreview" style="width:100%;" src="<?=base_url()?>assets/uploads/404.png" alt="Selected Image" style="max-width: 170px; display: none;">
+                     </div>
+                        <label class="btn btn-info btn-file btn-md" style="width: 170px;margin-left:95px;margin-top:5px;">
+                           <input id="imageInput"  type="file"  name="userfile" onchange="displayImage()" accept="image/*">
+                      </label>
+              
+                    <!-- close image frame --> 
                   </div>
                 </div>
                 <div class="form-group">
@@ -66,25 +70,22 @@
                      <?php }?>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label>Password</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      <span class="input-group-text bg-transparent border-right-0">
-                        <i class="fa fa-lock text-primary"></i>
-                      </span>
+                <!-- image frame --> 
+                    <!-- <input type="file" id="imageInput" name="userfile" onchange="displayImage()" accept="image/*">
+                     <img id="imagePreview" src="" alt="Selected Image" style="max-width: 300px; display: none;"> -->
+                <!-- close image frane --> 
+                   <div class="form-group">
+                      <label>Password</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend bg-transparent">
+                          <span class="input-group-text bg-transparent border-right-0">
+                            <i class="fa fa-lock text-primary"></i>
+                          </span>
+                        </div>
+                        <input type="password" required name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
+                      </div>
                     </div>
-                    <input type="password" required name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
-                  </div>
-                </div>
-                <div class="mb-4">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                      I agree to all Terms & Conditions
-                    </label>
-                  </div>
-                </div>
+  
                 <div class="mt-3">
                   <button type="submit" class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn">Sign Up</button>
                 </div>
@@ -106,3 +107,39 @@
   </div>
   <!-- container-scroller -->
 
+
+
+<script type="text/javascript">
+  
+      function displayImage() {
+        const fileInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+
+
+    $("#imageUploadForm").submit(function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: 'your_controller/upload_image', // Replace with your CodeIgniter controller URL
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Handle the server response here
+            },
+        });
+    });
+
+</script>
